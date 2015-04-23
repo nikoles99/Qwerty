@@ -59,7 +59,7 @@ public class MainActivity extends ActionBarActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.activity_main);
     try {
         Calendar calendar = Calendar.getInstance();
         String input =(calendar.get(Calendar.YEAR)-1)+"0901";
@@ -82,7 +82,8 @@ public class MainActivity extends ActionBarActivity{
         } catch (ParseException e) {
         e.printStackTrace();
         }
-        setContentView(R.layout.activity_main);
+        pagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
+
         viewPager=(ViewPager)findViewById(R.id.pager);
         viewPager.setAdapter(pagerAdapter);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -175,6 +176,8 @@ public class MainActivity extends ActionBarActivity{
 
         switch (item.getItemId()){
             case 0:
+                Intent intent = new Intent(this, UpdateTimetable.class);
+                startActivity(intent);
                 Toast.makeText(this, item.getTitle(), Toast.LENGTH_SHORT).show();
                 break;
             case 1:
