@@ -33,6 +33,7 @@ import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SectionDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -95,18 +96,32 @@ public class MainActivity extends ActionBarActivity{
                 .withActionBarDrawerToggle(true)
                 .withHeader(R.layout.drawer_header)
                 .addDrawerItems(
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_home).withIcon(FontAwesome.Icon.faw_home).withBadge("99").withIdentifier(1),
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_free_play).withIcon(FontAwesome.Icon.faw_gamepad),
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_custom).withIcon(FontAwesome.Icon.faw_eye).withBadge("6").withIdentifier(2),
-                        new SectionDrawerItem().withName(R.string.drawer_item_settings),
-                        new SecondaryDrawerItem().withName(R.string.drawer_item_help).withIcon(FontAwesome.Icon.faw_cog),
-                        new SecondaryDrawerItem().withName(R.string.drawer_item_open_source).withIcon(FontAwesome.Icon.faw_question).setEnabled(false),
-                        new DividerDrawerItem(),
-                        new SecondaryDrawerItem().withName(R.string.drawer_item_contact).withIcon(FontAwesome.Icon.faw_github).withBadge("12+").withIdentifier(1)
+                        new PrimaryDrawerItem().withName("Расписание").withIcon(FontAwesome.Icon.faw_eye).withBadge("").withIdentifier(1),
+                        new PrimaryDrawerItem().withName("eny").withIcon(FontAwesome.Icon.faw_adjust),
+                        new SectionDrawerItem().withName(R.string.drawer_item_settings)
+
                 )
-                .build();
+
+
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id, IDrawerItem drawerItem) {
+                        switch (position) {
+                            case 1:
+                                Intent intent = new Intent(getApplicationContext(), UpdateTimetable.class);
+                                startActivity(intent);
+
+                                break;
+                            case 2:
+                                
+                                break;
+
+                        }
+                    }
+                }).build();
 
     }
+
     private class MyFragmentPagerAdapter extends FragmentPagerAdapter{
 
             public MyFragmentPagerAdapter(FragmentManager fm) {
@@ -154,12 +169,8 @@ public class MainActivity extends ActionBarActivity{
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        /*actionBar=getSupportActionBar();
-        SpinnerFragment spinnerFragment=new SpinnerFragment();
-        FragmentTransaction fTrans=getFragmentManager().beginTransaction();
-        menu.add((CharSequence) spinnerFragment);
-        fTrans.commit();*/
+
+
 
             menu.add("1");
             menu.add("2");
@@ -178,7 +189,7 @@ public class MainActivity extends ActionBarActivity{
             case 0:
                 Intent intent = new Intent(this, UpdateTimetable.class);
                 startActivity(intent);
-                Toast.makeText(this, item.getTitle(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
                 break;
             case 1:
                 Toast.makeText(this, item.getTitle(), Toast.LENGTH_SHORT).show();
