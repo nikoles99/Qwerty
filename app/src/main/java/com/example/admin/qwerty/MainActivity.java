@@ -25,6 +25,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
 import com.mikepenz.iconics.typeface.FontAwesome;
@@ -46,7 +47,7 @@ import java.util.Date;
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class MainActivity extends ActionBarActivity{
 
-    Spinner spinner;
+
     ViewPager viewPager;
     PagerAdapter pagerAdapter;
     static final int PAGE_COUNT = 28;
@@ -56,7 +57,9 @@ public class MainActivity extends ActionBarActivity{
     Integer weeknumber;
     String week[]=new String[]{"Воскресенье","Понедельник","Вторник","Среда","Четверг","Пятница","Суббота"};
     int i=-1;
-    ActionBar actionBar;
+    Spinner spinner;
+    UpdateTimetable updateTimetable=new UpdateTimetable();
+    FragmentTransaction fTrans;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +93,14 @@ public class MainActivity extends ActionBarActivity{
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, week);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinner = (Spinner) findViewById(R.id.spinner_nav);
+        spinner.setAdapter(adapter);
+
+
         new Drawer()
                 .withActivity(this)
                 .withToolbar(toolbar)
@@ -108,12 +119,13 @@ public class MainActivity extends ActionBarActivity{
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id, IDrawerItem drawerItem) {
                         switch (position) {
                             case 1:
-                                Intent intent = new Intent(getApplicationContext(), UpdateTimetable.class);
-                                startActivity(intent);
 
+                                fTrans = getFragmentManager().beginTransaction();
+                                fTrans.add(R.id.fram, updateTimetable);
+                                fTrans.commit();
                                 break;
                             case 2:
-                                
+
                                 break;
 
                         }
@@ -145,7 +157,8 @@ public class MainActivity extends ActionBarActivity{
                 mTitle = day.toString();
                 /*if(actionBar!=null)
                 actionBar.setTitle(mTitle);*/
-                return PageFragment.newInstance(week[++day],weeknumber);
+                spinner.setSelection(++day);
+                return PageFragment.newInstance(week[day],weeknumber);
             }
 
             @Override

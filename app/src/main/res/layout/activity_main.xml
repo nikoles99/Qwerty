@@ -26,17 +26,33 @@
             android:elevation="4dp"
             android:minHeight="?attr/actionBarSize"
             android:paddingTop="@dimen/tool_bar_top_padding"
-            android:transitionName="actionBar" />
+            android:transitionName="actionBar" >
+        <Spinner
+            android:id="@+id/spinner_nav"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1ая Подгр"
+                android:id="@+id/subgroup"
+            android:background="#ff209aff" />
+        </android.support.v7.widget.Toolbar>
 
 
 
-        <android.support.v4.view.ViewPager
-                android:id="@+id/pager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            </android.support.v4.view.ViewPager>
+        <RelativeLayout
+            android:id="@+id/fram"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
 
-
+            <android.support.v4.view.ViewPager
+                    android:id="@+id/pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                </android.support.v4.view.ViewPager>
+        </RelativeLayout>
 
 
     </LinearLayout>

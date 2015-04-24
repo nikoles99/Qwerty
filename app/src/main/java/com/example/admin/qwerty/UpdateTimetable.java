@@ -1,12 +1,16 @@
 package com.example.admin.qwerty;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -24,7 +28,7 @@ import java.util.HashMap;
 /**
  * Created by Admin on 02.04.2015.
  */
-public class UpdateTimetable extends Activity {
+public class UpdateTimetable extends Fragment {
     EditText numberGroup;
     Button update;
     String group;
@@ -34,16 +38,18 @@ public class UpdateTimetable extends Activity {
     BDConnection bdConnection;
     ContentValues cv;
     SQLiteDatabase db;
+
+
+
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.updatetimetable);
-        update=(Button)findViewById(R.id.button);
-        numberGroup=(EditText)findViewById(R.id.textView);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view=inflater.inflate(R.layout.updatetimetable,null);
+        update=(Button)view.findViewById(R.id.button);
+        numberGroup=(EditText)view.findViewById(R.id.textView);
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bdConnection=new BDConnection(UpdateTimetable.this);
+                bdConnection=new BDConnection(getActivity().getApplicationContext());
                 cv = new ContentValues();
                 db = bdConnection.getWritableDatabase();
                 db.execSQL("DELETE FROM timetable");
@@ -52,7 +58,7 @@ public class UpdateTimetable extends Activity {
 
             }
         });
-
+        return view;
     }
 
     class MyTask extends AsyncTask<String, String, Void> {
@@ -141,7 +147,7 @@ public class UpdateTimetable extends Activity {
         @Override
         protected void onProgressUpdate(String... values) {
             super.onProgressUpdate(values);
-            Toast.makeText(UpdateTimetable.this, values[0], Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity().getApplicationContext(), values[0], Toast.LENGTH_LONG).show();
         }
 
 
