@@ -9,8 +9,8 @@
     <RelativeLayout
         android:id="@+id/aaa"
         android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:background="@android:color/background_dark">
 
 
@@ -35,24 +35,26 @@
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
                 android:text="1ая Подгр"
                 android:id="@+id/subgroup"
-            android:background="#ff209aff" />
+                android:background="?attr/colorPrimary" />
         </android.support.v7.widget.Toolbar>
 
 
 
-        <RelativeLayout
+        <FrameLayout
             android:id="@+id/fram"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
             <android.support.v4.view.ViewPager
                     android:id="@+id/pager"
+                    android:visibility="visible"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                 </android.support.v4.view.ViewPager>
-        </RelativeLayout>
+        </FrameLayout>
 
 
     </LinearLayout>

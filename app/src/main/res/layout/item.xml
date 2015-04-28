@@ -3,20 +3,24 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:background="@android:color/background_dark">
+
+    <TextView
+        android:layout_width="20dp"
+        android:layout_height="35dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/imag"
+        android:layout_marginTop="3dp"
+        android:layout_marginLeft="3dp"
+        android:background="#ffffec20"
+        android:textColor="#00ffffff" />
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent">
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Small Text"
-            android:id="@+id/time"
-            android:textAlignment="center" />
     </LinearLayout>
 
     <LinearLayout
@@ -26,18 +30,21 @@
         >
 
         <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="148dp"
             android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Large Text"
             android:id="@+id/subject" />
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Medium Text"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Small Text"
             android:id="@+id/teacher" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -60,10 +67,21 @@
         android:layout_height="fill_parent">
 
         <TextView
+            android:layout_width="132dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Small Text"
+            android:id="@+id/time"
+            android:layout_marginLeft="15dp"
+            android:textAlignment="center" />
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_marginLeft="15dp"
             android:text="Medium Text"
             android:id="@+id/audience" />
     </LinearLayout>
+
 </LinearLayout>

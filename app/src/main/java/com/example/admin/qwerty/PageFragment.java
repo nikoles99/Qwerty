@@ -20,19 +20,20 @@ import java.util.ArrayList;
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class PageFragment extends android.support.v4.app.ListFragment {
     String weekday;
-    int day;
+    int day,subgroup;
     BDConnection bdConnection;
     SQLiteDatabase db;
     static final String ARGUMENT_PAGE_NUMBER = "arg_page_number";
     ArrayList<Timetable> stringArrayAdapter;
     Timetable timetable;
 
-    static android.support.v4.app.Fragment newInstance(String page, int day) {
+    static android.support.v4.app.Fragment newInstance(String page, int day,int sgroup) {
         Log.e("pars", "newInstance");
         android.support.v4.app.Fragment pageFragment = new PageFragment();
         Bundle arguments = new Bundle();
         arguments.putString(ARGUMENT_PAGE_NUMBER, page);
         arguments.putInt("day", day);
+        arguments.putInt("subgroup", sgroup);
         pageFragment.setArguments(arguments);
 
         return pageFragment;
@@ -53,13 +54,12 @@ public class PageFragment extends android.support.v4.app.ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         Log.e("pars", "onCreateView");
         View view = inflater.inflate(R.layout.fragment_main, null);
-       /*ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_list_item_1, stringArrayAdapter);*/
         CostomAdapter costomAdapter=new CostomAdapter(container.getContext(),stringArrayAdapter);
         setListAdapter(costomAdapter);
         TextView tvPage = (TextView) view.findViewById(R.id.texr);
         weekday = getArguments().getString(ARGUMENT_PAGE_NUMBER);
         day = getArguments().getInt("day");
+        subgroup=getArguments().getInt("subgroup");
         tvPage.setText(weekday);
         setSubject();
         return view;
@@ -71,7 +71,8 @@ public class PageFragment extends android.support.v4.app.ListFragment {
         bdConnection=new BDConnection(context);
         db = bdConnection.getWritableDatabase();
         Cursor c = null;
-        c=db.rawQuery("Select * from timetable where weeknumber="+day+" and weekday='"+weekday+"'",null);
+        c=db.rawQuery("Select * from timetable where weeknumber="+day+"" +
+                " and weekday='"+weekday+"' and(subgroup=0 or subgroup="+subgroup+")",null);
         stringArrayAdapter.clear();
         if (c.moveToFirst()) {
             int time = c.getColumnIndex("time");

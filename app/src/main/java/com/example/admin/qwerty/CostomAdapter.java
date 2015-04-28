@@ -1,6 +1,7 @@
 package com.example.admin.qwerty;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +26,7 @@ public class CostomAdapter extends BaseAdapter {
         this.layoutInflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
      class ViewHolder {
-        TextView time,subject,audience,type,teacher;
+        TextView time,subject,audience,type,teacher,imag;
     }
     @Override
     public int getCount() {
@@ -56,6 +57,7 @@ public class CostomAdapter extends BaseAdapter {
             holder.audience = (TextView) vi.findViewById(R.id.audience);
             holder.type = (TextView) vi.findViewById(R.id.type);
             holder.teacher = (TextView) vi.findViewById(R.id.teacher);
+            holder.imag = (TextView) vi.findViewById(R.id.imag);
             vi.setTag(holder);
         }
         else{
@@ -68,6 +70,7 @@ public class CostomAdapter extends BaseAdapter {
             holder.teacher.setText("");
             holder.type.setText("");
             holder.audience.setText("");
+            holder.imag.setText("");
         }
         else {
             if(p.getLastname().equals("null")|| p.getAudience().equals("null")){
@@ -77,6 +80,17 @@ public class CostomAdapter extends BaseAdapter {
             else{
                 holder.audience.setText(p.getAudience());
                 holder.teacher.setText(p.getLastname());
+            }
+
+
+            if(p.getType().equals("ЛР")){
+                holder.imag.setBackgroundColor(Color.RED);
+            }
+            else  if(p.getType().equals("ЛК")){
+                holder.imag.setBackgroundColor(Color.GREEN);
+            }
+            else  if(p.getType().equals("ПЗ")){
+                holder.imag.setBackgroundColor(Color.YELLOW);
             }
             holder.time.setText(p.getTime());
             holder.subject.setText(p.getSubject());
