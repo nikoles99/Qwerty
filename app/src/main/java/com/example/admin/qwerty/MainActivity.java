@@ -25,6 +25,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 
+import android.widget.FrameLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 import com.mikepenz.iconics.typeface.FontAwesome;
@@ -40,11 +41,14 @@ import java.util.Date;
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class MainActivity extends ActionBarActivity{
     ViewPager viewPager;
+    FrameLayout frameLayout;
+
     PagerAdapter pagerAdapter;
     static final int PAGE_COUNT = 28;
     private String mTitle;
     Long resoult;
     Integer day;
+    private int n;
     Button subgroupbutton;
     static int subgruup=1;
     Integer weeknumber;
@@ -58,27 +62,41 @@ public class MainActivity extends ActionBarActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Time();
+        frameLayout=(FrameLayout)findViewById(R.id.fram);
         subgroupbutton=(Button)findViewById(R.id.subgroup);
         subgroupbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(subgroupbutton.getText().equals("1ая Подгр")){
+                    Time();
+                    n=0;
+                    frameLayout.removeView(viewPager);
                     subgroupbutton.setText("2ая Подгр");
                     subgruup=2;
-                   
+                    pagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
+                    frameLayout.addView(viewPager);
+                    viewPager=(ViewPager)findViewById(R.id.pager);
+                    viewPager.setAdapter(pagerAdapter);
+
 
                 }
                 else if(subgroupbutton.getText().equals("2ая Подгр")){
-
+                    frameLayout.removeView(viewPager);
+                    Time();
+                    n=0;
                     subgroupbutton.setText("1ая Подгр");
                     subgruup=1;
-                    viewPager.invalidate();
+                    pagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
+                    frameLayout.addView(viewPager);
+                    viewPager=(ViewPager)findViewById(R.id.pager);
+                    viewPager.setAdapter(pagerAdapter);
 
                 }
             }
         });
         pagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
         viewPager=(ViewPager)findViewById(R.id.pager);
+        n=viewPager.getCurrentItem();
         viewPager.setAdapter(pagerAdapter);
 
 
@@ -133,29 +151,67 @@ public class MainActivity extends ActionBarActivity{
 
             public MyFragmentPagerAdapter(FragmentManager fm) {
                 super(fm);
+
             }
 
 
-            @Override
+        @Override
             public Fragment getItem(int position) {
 
-                if(day==6)
-                    day=-1;
-                if(day==-1){
-                    weeknumber++;
-                    day=-1;
-                    if(weeknumber>4){
-                        weeknumber=1;
+            //Log.e("MyFragmentPagerAdapter", viewPager.getCurrentItem() + " " + n);
+                if(viewPager.getCurrentItem()<n){
+                    n--;
+                    --day;
+                    if (day == -1)
+                        day = 6;
+                    if (day == 0) {
+                        weeknumber--;
+                        day = 0;
+                        if (weeknumber < 1) {
+                            weeknumber = 4;
+                        }
                     }
-                }
-                if(weeknumber==0){
-                    weeknumber=4;
-                }
-                mTitle = day.toString();
-                spinner.setSelection(++day);
+                    if (weeknumber == 4) {
+                        weeknumber = 3;
+                    }
 
-                return PageFragment.newInstance(spinner.getSelectedItem().toString(),weeknumber,subgruup);
-            }
+                    Log.e("MyFragmentPagerAdapter", day+" 1");
+                   // spinner.setSelection(day);
+                }
+
+            else {
+                    if (viewPager.getCurrentItem() != n)
+                        n++;
+
+                        if (day == 6)
+                            day = -1;
+                    if (day == -1) {
+                        weeknumber++;
+                        day = -1;
+                        if (weeknumber > 4) {
+                            weeknumber = 1;
+                        }
+                    }
+                    if (weeknumber == 0) {
+                        weeknumber = 4;
+                    }
+
+
+                    if (day == -1) {
+                        spinner.setSelection(6);
+                        day++;
+                    } else {
+                        spinner.setSelection(day++);
+                    }
+                    Log.e("MyFragmentPagerAdapter", day + " 2");
+
+                }
+             //Log.e("MyFragmentPagerAdapter",viewPager.getCurrentItem() +"   "+ n+"");
+                return PageFragment.newInstance(week[day],weeknumber,subgruup);
+
+
+        }
+
         @Override
             public int getItemPosition(Object object) {
             return POSITION_UNCHANGED;
@@ -165,6 +221,7 @@ public class MainActivity extends ActionBarActivity{
                 return PAGE_COUNT;
             }
         }
+
 
 
 
@@ -226,7 +283,7 @@ public class MainActivity extends ActionBarActivity{
             Long firstDesemderWeek=calendar2.getTimeInMillis();
             Calendar diff = Calendar.getInstance();
             day =diff.get(Calendar.DAY_OF_WEEK)-2;
-            Log.e("pars",day.toString());
+            //Log.e("pars",day.toString());
             diff.setTimeInMillis(firstDesemderWeek - fistSeptemberWeek);
             resoult =diff.getTimeInMillis()/(24 * 60 * 60 * 1000)/7;
             resoult=(resoult+1)%4;

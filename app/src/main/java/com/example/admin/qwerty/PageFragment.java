@@ -38,7 +38,9 @@ public class PageFragment extends android.support.v4.app.ListFragment {
 
         return pageFragment;
     }
-
+    static void deleteFragment(android.support.v4.app.Fragment Fragment) {
+        Fragment=null;
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

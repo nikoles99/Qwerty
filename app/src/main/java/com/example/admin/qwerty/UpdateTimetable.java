@@ -67,7 +67,7 @@ public class UpdateTimetable extends Fragment {
         protected Void doInBackground(String... params) {
             try {
                 group=numberGroup.getText().toString();
-                URL url = new URL("http://www.bsuir.by/schedule/rest/schedule/"+group+"");
+                URL url = new URL("http://www.bsuir.by/schedule/rest/schedule/"+220601+"");
                 XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
                 factory.setNamespaceAware(true);
                 XmlPullParser xpp = factory.newPullParser();
