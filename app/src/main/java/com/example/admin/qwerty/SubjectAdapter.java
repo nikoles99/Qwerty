@@ -1,41 +1,37 @@
 package com.example.admin.qwerty;
 
+import java.util.ArrayList;
+
 import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebSettings;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+public class SubjectAdapter extends BaseAdapter {
+    private ArrayList<Lesson> lessons;
+    private LayoutInflater layoutInflater;
 
-/**
- * Created by Admin on 03.04.2015.
- */
+    public SubjectAdapter(Context context, ArrayList<Lesson> lessons) {
+        this.lessons = lessons;
+        this.layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
 
-public class CostomAdapter extends BaseAdapter {
-    private Context context;
-    private  ArrayList<Timetable> data;
-    LayoutInflater layoutInflater;
-    public CostomAdapter(Context c, ArrayList<Timetable> d) {
-        this.context=c;
-        this.data=d;
-        this.layoutInflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    class ViewHolder {
+        TextView time, subject, audience, type, teacher, imag;
     }
-     class ViewHolder {
-        TextView time,subject,audience,type,teacher,imag;
-    }
+
     @Override
     public int getCount() {
-        return data.size();
+        return lessons.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return data.get(position);
+        return lessons.get(position);
     }
 
     @Override
@@ -45,12 +41,12 @@ public class CostomAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Log.e("pars","getView");
+        Log.e("pars", "getView");
         View vi = convertView;
         ViewHolder holder = null;
-        Timetable p = (Timetable)getItem(position);
+        Lesson p = (Lesson) getItem(position);
         if (vi == null) {
-            vi = layoutInflater.inflate(R.layout.item, parent, false);
+            vi = layoutInflater.inflate(R.layout.lesson_item, parent, false);
             holder = new ViewHolder();
             holder.time = (TextView) vi.findViewById(R.id.time);
             holder.subject = (TextView) vi.findViewById(R.id.subject);
@@ -59,41 +55,36 @@ public class CostomAdapter extends BaseAdapter {
             holder.teacher = (TextView) vi.findViewById(R.id.teacher);
             holder.imag = (TextView) vi.findViewById(R.id.imag);
             vi.setTag(holder);
-        }
-        else{
+        } else {
             holder = (ViewHolder) vi.getTag();
         }
 
-        if(p.getSunday()!=null){
+        if (p.getSunday() != null) {
             holder.subject.setText(p.getSunday());
             holder.time.setText("");
             holder.teacher.setText("");
             holder.type.setText("");
             holder.audience.setText("");
             holder.imag.setText("");
-        }
-        else {
-            if(p.getLastname().equals("null")|| p.getAudience().equals("null")){
+        } else {
+            if (p.getLastname().equals("null") || p.getAudience().equals("null")) {
                 holder.audience.setText("");
                 holder.teacher.setText("");
-            }
-            else{
+            } else {
                 holder.audience.setText(p.getAudience());
                 holder.teacher.setText(p.getLastname());
             }
 
 
-            if(p.getType().equals("ЛР")){
+            if (p.getType().equals("ЛР")) {
                 holder.imag.setBackgroundColor(Color.RED);
-            }
-            else  if(p.getType().equals("ЛК")){
+            } else if (p.getType().equals("ЛК")) {
                 holder.imag.setBackgroundColor(Color.GREEN);
-            }
-            else  if(p.getType().equals("ПЗ")){
+            } else if (p.getType().equals("ПЗ")) {
                 holder.imag.setBackgroundColor(Color.YELLOW);
             }
             holder.time.setText(p.getTime());
-            holder.subject.setText(p.getSubject());
+            holder.subject.setText(p.getName());
             holder.type.setText(p.getType());
 
         }

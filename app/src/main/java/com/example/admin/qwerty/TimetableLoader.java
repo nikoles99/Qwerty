@@ -1,13 +1,11 @@
 package com.example.admin.qwerty;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,33 +23,28 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 
-/**
- * Created by Admin on 02.04.2015.
- */
-public class UpdateTimetable extends Fragment {
+public class TimetableLoader extends Fragment {
     EditText numberGroup;
     Button update;
     String group;
-    boolean findWeekDay=false;
-    HashMap hashMap=new HashMap();
-    String nameTag,weekDay="Понедельник";
-    BDConnection bdConnection;
+    boolean findWeekDay = false;
+    HashMap hashMap = new HashMap();
+    String nameTag, weekDay = "Понедельник";
+    DataBaseUtility dataBaseUtility;
     ContentValues cv;
     SQLiteDatabase db;
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.updatetimetable,null);
-        update=(Button)view.findViewById(R.id.button);
-        numberGroup=(EditText)view.findViewById(R.id.textView);
+        View view = inflater.inflate(R.layout.time_table_loader, null);
+        update = (Button) view.findViewById(R.id.button);
+        numberGroup = (EditText) view.findViewById(R.id.textView);
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bdConnection=new BDConnection(getActivity().getApplicationContext());
+                dataBaseUtility = new DataBaseUtility(getActivity().getApplicationContext());
                 cv = new ContentValues();
-                db = bdConnection.getWritableDatabase();
+                db = dataBaseUtility.getWritableDatabase();
                 db.execSQL("DELETE FROM timetable");
                 MyTask mt = new MyTask();
                 mt.execute();
@@ -66,8 +59,8 @@ public class UpdateTimetable extends Fragment {
         @Override
         protected Void doInBackground(String... params) {
             try {
-                group=numberGroup.getText().toString();
-                URL url = new URL("http://www.bsuir.by/schedule/rest/schedule/"+220601+"");
+                group = numberGroup.getText().toString();
+                URL url = new URL("http://www.bsuir.by/schedule/rest/schedule/" + 220601 + "");
                 XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
                 factory.setNamespaceAware(true);
                 XmlPullParser xpp = factory.newPullParser();
@@ -79,36 +72,36 @@ public class UpdateTimetable extends Fragment {
 
                             break;
                         case XmlPullParser.START_TAG:
-                            if(xpp.getName().equals("weekDay")){
-                                findWeekDay=true;
+                            if (xpp.getName().equals("weekDay")) {
+                                findWeekDay = true;
                             }
-                            nameTag=xpp.getName();
+                            nameTag = xpp.getName();
 
                             break;
                         case XmlPullParser.END_TAG:
-                            if(xpp.getName().equals("weekNumber")){
+                            if (xpp.getName().equals("weekNumber")) {
                                 db.execSQL("Insert into timetable(weekday,weeknumber,type,time,subject," +
-                                        "subgroup,audience,firstname,midlname,lastname) values ('"+
-                                        weekDay+"','"+
-                                        (String)hashMap.get("weekNumber")+"','"+
-                                        (String)hashMap.get("lessonType")+"','"+
-                                        (String)hashMap.get("lessonTime")+"','"+
-                                        (String)hashMap.get("subject")+"','"+
-                                        (String)hashMap.get("numSubgroup")+"','"+
-                                        (String)hashMap.get("auditory")+"','"+
-                                        (String)hashMap.get("firstName")+"','"+
-                                        (String)hashMap.get("middleName")+"','"+
-                                        (String)hashMap.get("lastName")+"')");
+                                        "subgroup,audience,firstname,midlname,lastname) values ('" +
+                                        weekDay + "','" +
+                                        (String) hashMap.get("weekNumber") + "','" +
+                                        (String) hashMap.get("lessonType") + "','" +
+                                        (String) hashMap.get("lessonTime") + "','" +
+                                        (String) hashMap.get("subject") + "','" +
+                                        (String) hashMap.get("numSubgroup") + "','" +
+                                        (String) hashMap.get("auditory") + "','" +
+                                        (String) hashMap.get("firstName") + "','" +
+                                        (String) hashMap.get("middleName") + "','" +
+                                        (String) hashMap.get("lastName") + "')");
 
 
                             }
-                            if(xpp.getName().equals("schedule"))
+                            if (xpp.getName().equals("schedule"))
                                 hashMap.clear();
                             break;
 
                         case XmlPullParser.TEXT:
-                            hashMap.put(nameTag,xpp.getText());
-                            if(findWeekDay) {
+                            hashMap.put(nameTag, xpp.getText());
+                            if (findWeekDay) {
                                 if (xpp.getText().equals("Понедельник"))
                                     weekDay = "Вторник";
                                 else if (xpp.getText().equals("Вторник"))
@@ -121,7 +114,7 @@ public class UpdateTimetable extends Fragment {
                                     weekDay = "Суббота";
                                 else if (xpp.getText().equals("Суббота"))
                                     weekDay = "Воскресенье";
-                                findWeekDay=false;
+                                findWeekDay = false;
                             }
                             break;
 
@@ -131,7 +124,7 @@ public class UpdateTimetable extends Fragment {
 
                     xpp.next();
                 }
-                bdConnection.close();
+                dataBaseUtility.close();
                 publishProgress("Расписание загружено");
             } catch (MalformedURLException e1) {
                 e1.printStackTrace();
@@ -144,13 +137,11 @@ public class UpdateTimetable extends Fragment {
             }
             return null;
         }
+
         @Override
         protected void onProgressUpdate(String... values) {
             super.onProgressUpdate(values);
             Toast.makeText(getActivity().getApplicationContext(), values[0], Toast.LENGTH_LONG).show();
         }
-
-
-
     }
 }

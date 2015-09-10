@@ -4,13 +4,9 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-/**
- * Created by Admin on 26.03.2015.
- */
-public class BDConnection extends SQLiteOpenHelper {
-    public BDConnection(Context context) {
+public class DataBaseUtility extends SQLiteOpenHelper {
+    public DataBaseUtility(Context context) {
         super(context, "timetable", null, 1);
-
     }
 
     @Override
@@ -20,17 +16,16 @@ public class BDConnection extends SQLiteOpenHelper {
                 + "weekday text,"
                 + "weeknumber text,"
                 + "type,"
-                +"time text,"
-                +"subject text,"
-                +"subgroup text,"
-                +"audience text,"
-                +"firstname text,"
-                +"midlname text,"
-                +"lastname text"+");");
+                + "time text,"
+                + "subject text,"
+                + "subgroup text,"
+                + "audience text,"
+                + "firstname text,"
+                + "midlname text,"
+                + "lastname text" + ");");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
     }
 }

@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    style="@style/Base.TextAppearance.AppCompat.Light.Widget.PopupMenu.Small"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/background_dark"
-    android:weightSum="1"
-    style="@style/Base.TextAppearance.AppCompat.Light.Widget.PopupMenu.Small">
+    android:orientation="vertical"
+    android:weightSum="1">
 
     <TextView
+        android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="62dp"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:gravity="center|center_vertical"
         android:text="Введите группу"
-        android:id="@+id/textView2"
-        android:gravity="center|center_vertical" />
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <EditText
+        android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="75dp"
+        android:textAlignment="center"
         android:textAppearance="?android:attr/textAppearanceLarge"
-
-        android:id="@+id/textView"
-        android:textIsSelectable="false"
-        android:textAlignment="center" />
+        android:textIsSelectable="false"/>
 
     <Button
+        android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="58dp"
-        android:text="Скачать Расписание"
-        android:id="@+id/button" />
+        android:text="Скачать Расписание" />
 </LinearLayout>
