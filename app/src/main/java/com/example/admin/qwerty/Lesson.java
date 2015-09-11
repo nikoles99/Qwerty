@@ -1,37 +1,91 @@
 package com.example.admin.qwerty;
 
+import android.text.format.Time;
+
+/**
+ * Описание учебной дисцеплины
+ */
 public class Lesson {
-    private String time;
+    /**
+     * Время начала занятия
+     */
+    private Time startTime;
+
+    /**
+     * Время окончания занятия
+     */
+    private Time finishTime;
+
+    /**
+     * Номер учебной недели
+     */
+    private int weekNumber;
+
+    /**
+     * Номер подгруппы
+     */
+    private int subGroup;
+
+    /**
+     * Название дисцеплины
+     */
     private String name;
-    private String lastName;
+
+    /**
+     * Тип проведения занятия
+     */
     private String type;
+
+    /**
+     * Аудитория
+     */
     private String audience;
 
-    public Lesson(String time, String name, String lastName, String type, String audience) {
-        this.time = time;
+    /**
+     * Преподователь
+     */
+    private Teacher teacher;
+
+    public Lesson(Time startTime, Time finishTime, int weekNumber, int subGroup, String name, String type, String audience, Teacher teacher) {
+        this.startTime = startTime;
+        this.finishTime = finishTime;
+        this.weekNumber = weekNumber;
+        this.subGroup = subGroup;
         this.name = name;
-        this.lastName = lastName;
         this.type = type;
         this.audience = audience;
+        this.teacher = teacher;
     }
 
-    public String getTime() {
-        return time;
+    public Time getStartTime() {
+        return startTime;
     }
 
-    public String getAudience() {
-        return audience;
+    public int getWeekNumber() {
+        return weekNumber;
+    }
+
+    public Time getFinishTime() {
+        return finishTime;
+    }
+
+    public int getSubGroup() {
+        return subGroup;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public String getType() {
         return type;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getAudience() {
+        return audience;
     }
 
-    public String getName() {
-        return name;
+    public Teacher getTeacher() {
+        return teacher;
     }
 }

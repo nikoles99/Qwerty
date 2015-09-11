@@ -16,7 +16,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <EditText
-        android:id="@+id/textView"
+        android:id="@+id/group"
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:textAlignment="center"
@@ -24,7 +24,7 @@
         android:textIsSelectable="false"/>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/loadTimetable"
         android:layout_width="match_parent"
         android:layout_height="58dp"
         android:text="Скачать Расписание" />

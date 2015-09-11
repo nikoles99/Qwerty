@@ -45,7 +45,7 @@ public class TimetableActivity extends ActionBarActivity {
     Integer weeknumber;
     String week[] = new String[]{"Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"};
     Spinner spinner;
-    TimetableLoader timetableLoader = new TimetableLoader();
+    LessonsActivity LessonsActivity = new LessonsActivity();
     FragmentTransaction fTrans;
 
     @Override
@@ -121,7 +121,7 @@ public class TimetableActivity extends ActionBarActivity {
                         switch (position) {
                             case 1:
                                 fTrans = getFragmentManager().beginTransaction();
-                                fTrans.add(R.id.fram, timetableLoader);
+                                //fTrans.add(R.id.fram, LessonsActivity);
                                 fTrans.commit();
                                 viewPager.setVisibility(View.INVISIBLE);
                                 getSupportActionBar().setDisplayHomeAsUpEnabled(false);
@@ -184,7 +184,7 @@ public class TimetableActivity extends ActionBarActivity {
                 Log.e("MyFragmentPagerAdapter", day + " 2");
 
             }
-            return PageFragment.newInstance(week[day], weeknumber, subgruup);
+            return null;
         }
 
         @Override
@@ -210,7 +210,7 @@ public class TimetableActivity extends ActionBarActivity {
 
         switch (item.getItemId()) {
             case 0:
-                Intent intent = new Intent(this, TimetableLoader.class);
+                Intent intent = new Intent(this, LessonsActivity.class);
                 startActivity(intent);
                 Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
                 break;
@@ -228,7 +228,7 @@ public class TimetableActivity extends ActionBarActivity {
             finish();
         } else {
             fTrans = getFragmentManager().beginTransaction();
-            fTrans.remove(timetableLoader);
+        //    fTrans.remove(LessonsActivity);
             fTrans.commit();
             viewPager.setVisibility(View.VISIBLE);
             spinner.setVisibility(View.VISIBLE);
